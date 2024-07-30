@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.9'
 
 networks:
   network-zabbix:
@@ -22,7 +22,7 @@ services:
 
   zabbix-server:
     container_name: zabbix-server
-    image: zabbix/zabbix-server-mysql:ubuntu-5.0.1
+    image: zabbix/zabbix-server-mysql:ubuntu-latest
     networks:
       - network-zabbix
     links:
@@ -42,7 +42,7 @@ services:
 
   zabbix-frontend:
     container_name: zabbix-frontend
-    image: zabbix/zabbix-web-apache-mysql:ubuntu-5.0.1
+    image: zabbix/zabbix-web-apache-mysql:ubuntu-latest
     networks:
       - network-zabbix
     links:
@@ -59,10 +59,10 @@ services:
       - PHP_TZ=America/Sao_Paulo
     depends_on:
       - mysql
-   
+
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:latest
     networks:
       - network-zabbix
     links:
@@ -79,7 +79,7 @@ services:
 
   zabbix-agent:
     container_name: zabbix-agent
-    image: zabbix/zabbix-agent2:alpine-5.0.1
+    image: zabbix/zabbix-agent2:alpine-latest
     user: root
     networks:
       - network-zabbix
@@ -94,14 +94,3 @@ services:
     environment:
       - ZBX_HOSTNAME=Zabbix server
       - ZBX_SERVER_HOST=172.18.0.1
-
-  portainer:
-    container_name: portainer
-    image: portainer/portainer
-    networks:
-      - network-zabbix
-    restart: always
-    ports:
-      - '9000:9000'
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
