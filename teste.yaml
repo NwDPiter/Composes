@@ -64,12 +64,24 @@ services:
     networks:
       - zabbix-net
 
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - "9000:9000"
+    volumes:
+      - portainer-data:/data
+    networks:
+      - zabbix-net
+
 volumes:
   zabbix-db-data:
     driver: local
   zabbix-server-data:
     driver: local
   grafana-data:
+    driver: local
+  portainer-data:
     driver: local
 
 networks:
