@@ -12,6 +12,7 @@ services:
       - zabbix-db-data:/var/lib/postgresql/data
     networks:
       - zabbix-net
+    privileged: true  # Adicionado modo privileged
 
   zabbix-server:
     image: zabbix/zabbix-server-pgsql:latest
@@ -27,6 +28,7 @@ services:
       - zabbix-server-data:/var/lib/zabbix
     networks:
       - zabbix-net
+    privileged: true  # Adicionado modo privileged
 
   zabbix-web:
     image: zabbix/zabbix-web-nginx-pgsql:latest
@@ -43,6 +45,7 @@ services:
       - zabbix-server
     networks:
       - zabbix-net
+    privileged: true  # Adicionado modo privileged
 
   zabbix-agent:
     image: zabbix/zabbix-agent:latest
@@ -51,18 +54,20 @@ services:
       ZBX_SERVER_HOST: zabbix-server
     networks:
       - zabbix-net
+    privileged: true  # Adicionado modo privileged
 
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     environment:
-      GF_SECURITY_ADMIN_PASSWORD: admin  
+      GF_SECURITY_ADMIN_PASSWORD: admin  # Defina uma senha de admin aqui
     ports:
       - "3000:3000"
     volumes:
       - grafana-data:/var/lib/grafana
     networks:
       - zabbix-net
+    privileged: true  # Adicionado modo privileged
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -73,6 +78,7 @@ services:
       - portainer-data:/data
     networks:
       - zabbix-net
+    privileged: true  # Adicionado modo privileged
 
 volumes:
   zabbix-db-data:
